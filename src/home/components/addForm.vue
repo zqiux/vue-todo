@@ -58,8 +58,16 @@ export default {
   },
   methods:{
     handleSubmitForm(){
-      this.
-    }
+      this.$refs.addForm.validate((valid)=>{
+        if(valid){
+          this.$emit('add',this.addForm);
+          return true
+        }else{
+          return false
+        }
+      })
+    },
+   
   }
 };
 </script>

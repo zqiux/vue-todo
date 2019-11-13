@@ -3,7 +3,7 @@
     <el-row type="flex" :gutter="20">
       <el-col :span="8">
         <h4>Add Form</h4>
-        <add-form></add-form>
+        <add-form @add="handleAddTodo" ref="addForm"></add-form>
       </el-col>
       <el-col :span="8">
         <h4>Todo List</h4>
@@ -69,6 +69,29 @@ export default {
         }
       ]
     };
+  },
+  // mounted:function(){
+  //   console.log('asd',this.$refs.addForm);
+  //   this.$refs.addForm.getMessage('你好吗？')
+  // },
+  methods:{
+    handleAddTodo(payload){
+      const newTodo = {...payload,timestamp:Date.now()}
+      this.todo.push(newTodo)
+      const res = storage.set('todo',JSON.stringify(this.todo))
+      if(!res.suc){
+        this.$alert(res.msg,'Error')
+        .then(function(){})
+        .catch(function(){})
+      }else{
+        this.$MESSAGE({
+          message:'Add successfully',
+          type:'success'
+        })
+        this.$refs.addForm.handleResetForm()
+      }
+    }
+    
   }
 };
 </script>
