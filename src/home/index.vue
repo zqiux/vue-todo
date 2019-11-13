@@ -19,11 +19,56 @@
     <!-- 下拉选框 -->
     <el-row type="flex" justify="center" align="middle" style="margin-top: 8px;">
       <span>Check Interval:</span>
-      <el-select>
-          <el-option>
-
-          </el-option>
+      <el-select placeholder="请选择" v-model="interval">
+        <el-option
+          v-for="interval in intervalOptions"
+          :key="interval.value"
+          :label="interval.label"
+          :value="interval.value"
+        ></el-option>
       </el-select>
     </el-row>
   </el-main>
 </template>
+<script>
+import addForm from "./components/addForm";
+
+
+export default {
+  name:'home',
+  components:{
+    addForm
+  },
+  data() {
+    return {
+      interval: "asdf",
+      intervalOptions: [
+        {
+          label: "1 min",
+          value: 60000
+        },
+        {
+          label: "3 min",
+          value: 180000
+        },
+        {
+          label: "5 min",
+          value: 300000
+        },
+        {
+          label: "10 min",
+          value: 600000
+        },
+        {
+          label: "15 min",
+          value: 900000
+        },
+        {
+          label: "30 min",
+          value: 1800000
+        }
+      ]
+    };
+  }
+};
+</script>
