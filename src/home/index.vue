@@ -7,6 +7,7 @@
       </el-col>
       <el-col :span="8">
         <h4>Todo List</h4>
+        <todo-list :todo="todo" ></todo-list>
       </el-col>
       <el-col :span="8">
         <h4>Done List</h4>
@@ -32,15 +33,20 @@
 </template>
 <script>
 import addForm from "./components/addForm";
+import TodoList from "./components/TodoList";
+import storage from "../model/storage";
 
 
 export default {
   name:'home',
   components:{
-    addForm
+    addForm,
+    TodoList
   },
   data() {
     return {
+      todo:storage.get('todo').value || [],
+      done:storage.get('done').value || [],
       interval: "asdf",
       intervalOptions: [
         {
