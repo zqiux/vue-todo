@@ -11,11 +11,12 @@
       </el-col>
       <el-col :span="8">
         <h4>Done List</h4>
+        <done-list :done="done"></done-list>
       </el-col>
     </el-row>
     <!-- 按钮 -->
     <el-row type="flex" justify="center" style="margin-top:8px">
-      <el-button type="danger">Clear All</el-button>
+      <el-button type="danger" @click="handleClear">Clear All</el-button>
     </el-row>
     <!-- 下拉选框 -->
     <el-row type="flex" justify="center" align="middle" style="margin-top: 8px;">
@@ -32,16 +33,18 @@
   </el-main>
 </template>
 <script>
-import addForm from "./components/addForm";
-import TodoList from "./components/TodoList";
-import storage from "../model/storage";
+import addForm from "./components/addForm"
+import TodoList from "./components/TodoList"
+import storage from "../model/storage"
+import DoneList from './components/DoneList'
 
 
 export default {
   name:'home',
   components:{
     addForm,
-    TodoList
+    TodoList,
+    DoneList
   },
   data() {
     return {
@@ -96,6 +99,11 @@ export default {
         })
         this.$refs.addForm.handleResetForm()
       }
+    },
+    handleClear () {
+      this.todo = [];
+      this.done = [];
+      storage.clear()
     }
     
   }
