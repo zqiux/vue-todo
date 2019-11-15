@@ -21,7 +21,7 @@
     <!-- 按钮 -->
     <el-form-item label-width="0" style="text-align:center;">
       <el-button type="primary" @click="handleSubmitForm">Add</el-button>
-      <el-button type="">Reset</el-button>
+      <el-button @click="handleResetForm">Reset</el-button>
     </el-form-item>
 
   </el-form>
@@ -57,16 +57,19 @@ export default {
     }
   },
   methods:{
-    handleSubmitForm(){
-      this.$refs.addForm.validate((valid)=>{
-        if(valid){
-          this.$emit('add',this.addForm);
+   handleSubmitForm () {
+      this.$refs.addForm.validate((valid) => {
+        if (valid) {
+          this.$emit('add', this.addForm)
           return true
-        }else{
+        } else {
           return false
         }
       })
     },
+    handleResetForm(){
+      this.$refs.addForm.resetFields()
+    }
    
   }
 };

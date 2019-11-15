@@ -7,11 +7,11 @@
       </el-col>
       <el-col :span="8">
         <h4>Todo List</h4>
-        <todo-list :todo="todo" ></todo-list>
+        <todo-list :todo="todo" @done="handleDone" @remove="handleRemove"></todo-list>
       </el-col>
       <el-col :span="8">
         <h4>Done List</h4>
-        <done-list :done="done"></done-list>
+        <done-list :done="done" @remove="handleRemove"></done-list>
       </el-col>
     </el-row>
     <!-- 按钮 -->
@@ -104,7 +104,41 @@ export default {
       this.todo = [];
       this.done = [];
       storage.clear()
+    },
+    handleDone (payload){
+      const newDone = this.todo.shift()
+      this.done.push(newDone)
+      const res1 = storage.set('todo',JSON.stringify(this.todo))
+      const res2 = storage.set('done',JSON.stringigy(this.done))
+      // if(!res1.suc)
+    },
+    handleRemove(payload){
+      const{ type, index }=payload
+      let res
+      switch (type) {
+        case 'todo':
+          this.todo.splice(index,1)
+          res = storage.set('todo',JSON.stringify(this.todo))
+          break
+        case 'done':
+          this.done.splice(index,1)
+          res = storage.set('done',JSON.stringify(this.done))
+          break
+        default:
+          break
+      }
+      if (!res.suc) {
+        this.$alert(res.msg, 'Error')
+          .then(function () {})
+          .catch(function () {})
+      } else {
+        this.$message({
+          message: 'Remove successfully',
+          type: 'success'
+        })
+      }
     }
+
     
   }
 };
